@@ -8,31 +8,76 @@ import java.util.*;
 
 
 
-class Analysen {
+class Analysen  {
+
 
 	/**
 	 * Wie viele Tore fallen durchschnittlich in jedem Spiel?
 	 */
 	static double torstatistikenToreProSpiel() throws IOException {
 
-		return 0.0;
+		Bundesliga bl = Bundesliga.loadFromResource();
+		int tore = 0;
+
+		for (Spiel s: bl.spiele) {
+			tore += s.getToreHeim() + s.getToreGast();
+		}
+
+		return (double) tore / bl.spiele.size();
 	}
 
 	/**
 	 * Wie viele Tore fallen durchschnittlich in einem Spiel der 1. Liga?
 	 */
 	static double torstatustikenToreProErstligaspiel() throws IOException {
+		Bundesliga bl = Bundesliga.loadFromResource();
+
+		int tore = 0;
+		int count = 0;
 
 
-		return 0.0;
+		for(Spiel s: bl.spiele){
+			for (Verein v: bl.vereine.values()) {
+				if(v.getLiga() == 1 && v.getId() == s.getHeim()) {
+					tore += s.getToreHeim() + s.getToreGast();
+					count++;
+				}
+			}
+		}
+		return (double) tore/count;
 	}
 
 	/**
 	 * Wie viele Tore fallen durchschnittlich an einem Spieltag der 2. Liga?
 	 */
 	static double torstatistikenToreProSpieltag2teLiga() throws IOException {
+		Bundesliga bl = Bundesliga.loadFromResource();
 
-		return 0.0;
+		double tore = 0.0;
+
+
+		for(Spiel s: bl.spiele){
+			for (Verein v: bl.vereine.values()) {
+				if(v.getLiga() == 2 && v.getId() == s.getHeim()) {
+					tore += s.getToreHeim() + s.getToreGast();
+				}
+			}
+		}
+
+		double last = 0.0;
+
+		for (Spiel s: bl.spiele) {
+			for (Verein v: bl.vereine.values()){
+				if(v.getLiga() == 2){
+					last = s.getSpieltag();
+				}
+			}
+		}
+
+		System.out.println(last);
+
+		return (tore/last);
+
 	}
 
 	/**
