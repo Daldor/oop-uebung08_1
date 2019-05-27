@@ -43,7 +43,6 @@ class AnalysenTest {
 	void testTorstatistikenToreProSpieltag2teLiga() throws IOException {
 		// 24.96875
 		assertEquals(24.968, Analysen.torstatistikenToreProSpieltag2teLiga(), 0.001);
-
 		System.out.println("Tore zweite Liga pro Spieltag: " + Analysen.torstatistikenToreProSpieltag2teLiga());
 	}
 
@@ -55,8 +54,8 @@ class AnalysenTest {
 
 	@Test
 	void testTorstatistikenToreNachmittagsAbends() throws IOException {
-		//assertTrue(Analysen.torstatistikenToreNachmittagsAbends());
-		System.out.println(Analysen.torstatistikenToreNachmittagsAbends());
+		assertTrue(Analysen.torstatistikenToreNachmittagsAbends());
+		//System.out.println(Analysen.torstatistikenToreNachmittagsAbends());
 	}
 
 
@@ -67,8 +66,8 @@ class AnalysenTest {
 
 	@Test
 	void testTorstatistikenToreDaheim() throws IOException {
-		//assertTrue(Analysen.torstatistikenToreDaheim());
-		System.out.println(Analysen.torstatistikenToreDaheim());
+		assertTrue(Analysen.torstatistikenToreDaheim());
+		//System.out.println(Analysen.torstatistikenToreDaheim());
 	}
 
 
@@ -80,8 +79,8 @@ class AnalysenTest {
 
 	@Test
 	void testVereineToreVerein1erzielt() throws IOException {
-		//assertEquals(88, Analysen.vereineToreVerein1erzielt());
-		System.out.println(Analysen.vereineToreVerein1erzielt());
+		assertEquals(88, Analysen.vereineToreVerein1erzielt());
+		//System.out.println(Analysen.vereineToreVerein1erzielt());
 	}
 
 
@@ -93,8 +92,8 @@ class AnalysenTest {
 
 	@Test
 	void testVereineToreVerein2erhalten() throws IOException {
-		//assertEquals(36, Analysen.vereineToreVerein2erhalten());
-		System.out.println(Analysen.vereineToreVerein2erhalten());
+		assertEquals(36, Analysen.vereineToreVerein2erhalten());
+		//System.out.println(Analysen.vereineToreVerein2erhalten());
 	}
 
 
@@ -108,7 +107,7 @@ class AnalysenTest {
 	@Test
 	void testVereineToreVerein20punkte() throws IOException {
 		assertEquals(57, Analysen.vereineToreVerein20punkte());
-		System.out.println(Analysen.vereineToreVerein20punkte());
+		//System.out.println(Analysen.vereineToreVerein20punkte());
 	}
 
 
@@ -120,8 +119,8 @@ class AnalysenTest {
 
 	@Test
 	void testVereineTorverhaeltnis26() throws IOException {
-		//assertEquals(-1, Analysen.vereineTorverhaeltnis26());
-		System.out.println(Analysen.vereineTorverhaeltnis26());
+		assertEquals(-1, Analysen.vereineTorverhaeltnis26());
+		//System.out.println(Analysen.vereineTorverhaeltnis26());
 	}
 
 
@@ -145,12 +144,9 @@ class AnalysenTest {
 	/**
 	 * Welcher Verein hat die wenigsten Tore auswärts geschossen, und wie viele?
 	 */
-/*
+
 	@Test
 	void vereineWenigsteToreAuswaerts() throws IOException {
 		assertEquals(new Analysen.VereinTore("Rot-Weiß Erfurt", 0), Analysen.vereineWenigsteToreAuswaerts());
 	}
-
-
- */
 }

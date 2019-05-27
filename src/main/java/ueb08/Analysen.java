@@ -1,6 +1,7 @@
 package ueb08;
 
 import org.apache.commons.lang3.tuple.Pair;
+
 //import sun.text.normalizer.VersionInfo;
 
 import java.io.IOException;
@@ -10,6 +11,41 @@ import java.util.*;
 
 
 class Analysen  {
+    static <T> T[] swap(T [] arr, int a, int b){
+
+        if(arr.length < 1){
+            return arr;
+        }
+        T hilf = arr[a];
+        arr[a] = arr[b];
+        arr[b] = hilf;
+        return arr;
+    }
+
+
+    static <T extends Comparable<T>> void bubbleSort(T[]arr){
+        for (int k = 0; k < arr.length; k++) {
+            for (int i = 0; i < arr.length - 1; i++) {
+                int j = i + 1;
+                if (arr[i].compareTo(arr[j]) > 0) {
+                    swap(arr, i, j);
+                    //i = j - 1;
+                }
+            }
+        }
+    }
+
+    static <T extends Comparable<T>> void bubbleSort2(T[]arr){
+        for (int k = 0; k < arr.length; k++) {
+            for (int i = 0; i < arr.length - 1; i++) {
+                int j = i + 1;
+                if (arr[i].compareTo(arr[j]) < 0) {
+                    swap(arr, i, j);
+                    //i = j - 1;
+                }
+            }
+        }
+    }
 
 
 	/**
@@ -75,7 +111,7 @@ class Analysen  {
 			}
 		}
 
-		System.out.println(last);
+		//System.out.println(last);
 
 		return (double) tore / (double) last;
 
@@ -294,7 +330,7 @@ class Analysen  {
 
 				VereinTore [] arr = new VereinTore[bl.vereine.values().size()];
 
-				System.out.println("Vereinsanzahl: " + arr.length);
+				//System.out.println("Vereinsanzahl: " + arr.length);
 
 
 				int counter = 0;
@@ -325,37 +361,43 @@ class Analysen  {
 				return toreDerVereine;
 
 		}
-				static <T> T[] swap(T [] arr, int a, int b){
 
-					if(arr.length < 1){
-						return arr;
-					}
-					T hilf = arr[a];
-					arr[a] = arr[b];
-					arr[b] = hilf;
-					return arr;
-				}
-
-
-				static <T extends Comparable<T>> void bubbleSort(T[]arr){
-					for (int k = 0; k < arr.length; k++) {
-						for (int i = 0; i < arr.length - 1; i++) {
-							int j = i + 1;
-							if (arr[i].compareTo(arr[j]) > 0) {
-								swap(arr, i, j);
-								//i = j - 1;
-							}
-						}
-					}
-				}
 
 
 			/**
 			 * Welcher Verein hat die wenigsten Tore auswärts geschossen, und wie viele?
 			 */
 			static VereinTore vereineWenigsteToreAuswaerts () throws IOException {
+			    Bundesliga bl = Bundesliga.loadFromResource();
 
-				return null;
+			    List<VereinTore> auswaertsToreListe = new LinkedList<>();
+
+			    VereinTore [] auswaertsToreArr = new VereinTore[bl.vereine.values().size()];
+
+			    int counter = 0;
+			    for(Verein v: bl.vereine.values()){
+			        int auswaertstore = 0;
+			        for(Spiel s: bl.spiele){
+			            if(v.getId() == s.getGast()){
+                            auswaertstore += s.getToreGast();
+                        }
+                    }
+                    auswaertsToreArr[counter] = new VereinTore(v.getName(), auswaertstore);
+			        counter++;
+                }
+
+			    bubbleSort2(auswaertsToreArr);
+
+//			    for (int i = 0; i < 10; i++){
+//                    System.out.println(auswaertsToreArr[i].getVerein() + " AnzahlTore: " + auswaertsToreArr[i].tore);
+//                }
+//                System.out.println("Verein mit den wenigsten Auswärtstoren: " + auswaertsToreArr[0].getVerein() + " AnzahlTore: " + auswaertsToreArr[0].tore);
+
+
+			    auswaertsToreListe = Arrays.asList(auswaertsToreArr);
+
+
+				return auswaertsToreListe.get(0);
 			}
 
 		}
