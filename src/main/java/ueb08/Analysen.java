@@ -231,7 +231,7 @@ class Analysen  {
 			/**
 			 * Hilfsklasse.
 			 */
-		static  class VereinTore implements Comparator<VereinTore> {
+		static  class VereinTore implements Comparator<VereinTore>, Comparable<VereinTore> {
 				String verein;
 				int tore;
 
@@ -269,6 +269,16 @@ class Analysen  {
 					}
 				}
 
+				public int compareTo(VereinTore vt) {
+					if (this.tore < vt.tore) {
+						return 1;
+					} else if (this.tore == vt.tore) {
+						return 0;
+					} else {
+						return -1;
+					}
+				}
+
 			}
 
 
@@ -277,50 +287,68 @@ class Analysen  {
 			/**
 			 * Welche drei Vereine haben die meisten Tore zuhause geschossen, und wie viele?
 			 */
-			static List<VereinTore> vereineMeisteToreZuhause () throws IOException {
+			 static List<VereinTore> vereineMeisteToreZuhause () throws IOException {
 				Bundesliga bl = Bundesliga.loadFromResource();
 
 				List<VereinTore> toreDerVereine = new LinkedList<>();
 
 				VereinTore [] arr = new VereinTore[bl.vereine.values().size()];
 
-				for (int i = 0; i < arr.length; i++){
-					for(Verein v: bl.vereine.values()){
-						int tore = 0;
-						for(Spiel s: bl.spiele){
-							if(v.getId() == s.getHeim()){
-								tore += s.getToreHeim();
+				System.out.println("Vereinsanzahl: " + arr.length);
+
+
+				int counter = 0;
+				//for (int i = 0; i < arr.length; i++){
+				for(Verein v: bl.vereine.values()) {
+					int tore = 0;
+					for (Spiel s : bl.spiele) {
+						if (v.getId() == s.getHeim()) {
+							tore += s.getToreHeim();
+						}
+					}
+					arr[counter] = new VereinTore(v.getName(), tore);
+					counter++;
+				}
+
+
+//				for(int i = 0; i < arr.length -1; i++){
+//					int j = i+1;
+//					arr[i].compareTo(arr[j]);
+//					i++;
+//				}
+
+				bubbleSort(arr);
+//				for (int i = 0 ; i < 5; i++){
+//					System.out.println(arr[i].getVerein());
+//				}
+				toreDerVereine = Arrays.asList(arr);
+				return toreDerVereine;
+
+		}
+				static <T> T[] swap(T [] arr, int a, int b){
+
+					if(arr.length < 1){
+						return arr;
+					}
+					T hilf = arr[a];
+					arr[a] = arr[b];
+					arr[b] = hilf;
+					return arr;
+				}
+
+
+				static <T extends Comparable<T>> void bubbleSort(T[]arr){
+					for (int k = 0; k < arr.length; k++) {
+						for (int i = 0; i < arr.length - 1; i++) {
+							int j = i + 1;
+							if (arr[i].compareTo(arr[j]) > 0) {
+								swap(arr, i, j);
+								//i = j - 1;
 							}
 						}
-						arr[i] = new VereinTore(v.getName(), tore);
 					}
 				}
 
-				VereinTore eins = null;
-				VereinTore zwei = null;
-				VereinTore drei = null;
-
-
-				for(int i = 0; i < arr.length -1 ; i++){
-					if(arr[i].compare(arr[i],arr[i+1]) == 1){
-						eins = arr[i];
-					}
-					else if(arr[i].compare(arr[i],arr[i+1]) == 1 && arr[i].getTore() < eins.getTore()){
-						zwei = arr[i];
-					}
-					else if(arr[i].compare(arr[i],arr[i+1]) == 1 && arr[i].getTore() < zwei.getTore()){
-						drei = arr[i];
-					}
-				}
-
-				List<VereinTore> output = null;
-
-				output.add(eins);
-				output.add(zwei);
-				output.add(drei);
-
-				return output;
-			}
 
 			/**
 			 * Welcher Verein hat die wenigsten Tore auswärts geschossen, und wie viele?
